@@ -3,24 +3,21 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "dictionary.h"
 
 int LIFES = 5;
 char wordToGuess[100];
 char hiddenWord[100] = {'_'};
 
-char *getRandomWord() {
-    srand(time(NULL));
-    char *dictionary[17] = {"document", "northern", "amoebic", "planet", "electric", "attack", "houseguest", "blank",
-                            "knuckles", "bitter", "blindly", "tomato", "gibberish", "expert", "buzz", "command",
-                            "pink"};
-    int rng = rand() % 17;
-    return dictionary[rng];
-}
 
-void printWordWithSpaces(char * word){
-    for (int i = 0; word[i] != '\0'; ++i) {
+void printWordWithSpaces(char *word) {
+    int end = 0;
+    for (int i = 0; word[i] != '\0'; i++) {
         printf("%c ", word[i]);
+        end = i;
     }
+    printf("%c ", word[end + 1]);
+
 }
 
 int guessedCompleteWord() {
@@ -56,16 +53,12 @@ void loadGame() {
     printf("**HANGMAN**\n");
     printf("***********\n");
     char guess;
-    //fgets(wordToGuess, 100, stdin);
     strcpy(wordToGuess, getRandomWord());
-
-    int end = 0;
+    strcpy(hiddenWord, wordToGuess);
     for (int i = 0; wordToGuess[i] != '\0'; i++) {
         hiddenWord[i] = '_';
-        end = i;
     }
-    hiddenWord[end] = '\0';
-    //printf(hiddenWord);
+
     printWordWithSpaces(hiddenWord);
     printf("\n");
     printf("***********\n");
